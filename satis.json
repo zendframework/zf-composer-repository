@@ -80,7 +80,6 @@
     {"type": "vcs", "url": "/mnt/efs/packages.zendframework.com/repos/zendframework/zend-session/.git"},
     {"type": "vcs", "url": "/mnt/efs/packages.zendframework.com/repos/zendframework/ZendSkeletonApplication/.git"},
     {"type": "vcs", "url": "/mnt/efs/packages.zendframework.com/repos/zendframework/zend-skeleton-installer/.git"},
-    {"type": "vcs", "url": "/mnt/efs/packages.zendframework.com/repos/zendframework/ZendSkeletonModule/.git"},
     {"type": "vcs", "url": "/mnt/efs/packages.zendframework.com/repos/zendframework/zend-soap/.git"},
     {"type": "vcs", "url": "/mnt/efs/packages.zendframework.com/repos/zendframework/zend-stdlib/.git"},
     {"type": "vcs", "url": "/mnt/efs/packages.zendframework.com/repos/zendframework/zend-stratigility/.git"},
