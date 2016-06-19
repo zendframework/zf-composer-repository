@@ -43,4 +43,5 @@ git-repos:
 composer: composer-vendor git-repos
 	@echo "Running satis to create composer repository..."
 	-$(PHP) -d "memory_limit=-1" $(CURDIR)/bin/satis build --skip-errors $(CURDIR)/satis.json $(PUBLIC)
+	-sed -re 's#$(GIT_REPOS)([^"]+)#https://github.com\1.git#g' --in-place $$(ls -t $(PUBLIC)/include | head -n 1)
 	@echo "[DONE] Running satis to create composer repository."
