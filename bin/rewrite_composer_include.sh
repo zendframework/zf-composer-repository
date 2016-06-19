@@ -6,4 +6,4 @@ fi
 PUBLIC=$1
 GIT_REPOS=$2
 
-sed -re "s#${GIT_REPOS}([^\"]+)#https://github.com\1.git#g" --in-place ${PUBLIC}/$(ls -t ${PUBLIC}/include | head -n 1)
+sed -re "s#${GIT_REPOS}([^\"]+)#https://github.com\1.git#g" --in-place ${PUBLIC}/include/$(ls -t ${PUBLIC}/include | head -n 1)
