@@ -53,6 +53,8 @@
                 </code></pre>
             </div>
 
+            <div class="spacing"></div>
+
             <div class="col-sm-12 col-lg-12">
               <p>Filter by package name:</p>
 
@@ -60,6 +62,9 @@
             </div>
         </div>
     </div>
+
+    <div class="spacing"></div>
+    <div class="hline"></div>
 
     <div id="package-list" class="container">
     {% for name, package in packages %}
@@ -87,7 +92,7 @@
                     <table class="table">
                         {% if package.highest.homepage %}
                             <tr>
-                                <th class="info"></th>Homepage</th>
+                                <th class="info">Homepage</th>
                                 <td><a href="{{ package.highest.homepage }}">{{ package.highest.homepage }}</a></td>
                             </tr>
                         {% endif %}
