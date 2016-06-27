@@ -75,7 +75,7 @@
         <div class="row"><div class="col-sm-12 col-lg-12">
             <div class="panel panel-default panel-component">
                 <div class="panel-heading">
-                    <h3 id="{{ package.highest.name }}">{{ package.highest.name }}<a href="#{{ package.highest.name }}"><small>¶</small></a></h3>
+                    <h4 id="{{ package.highest.name }}">{{ package.highest.name }}<a href="#{{ package.highest.name }}"><small>¶</small></a></h4>
                 </div>
               
                 <div class="panel-body">
@@ -223,8 +223,8 @@
             timer = setTimeout(function() {
                 $("#package-list").hide();
                 packages.each(function(){
-                    show = $(this).find("h3").text().toLowerCase().indexOf(needle) != -1;
-                    $(this)..toggle(show);
+                    show = $(this).find("h4").text().toLowerCase().indexOf(needle) != -1;
+                    $(this).toggle(show);
                 });
                 $('#package-list').show();
             }, ms);
