@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Zend Framework Composer Repository</title>
+    <link rel="shortcut icon" href="/ico/favicon.ico" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="/css/prism.css" type="text/css" />
+    <link rel="stylesheet" href="/css/main.css" type="text/css" />
+</head>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://framework.zend.com/"><img src="/img/zf-logo-mark.png"></a> <a href="/">Packages</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="doc" class="container">
+        <div class="jumbotron">
+          <h1>Zend Framework Composer Repository</h1>
+
+          <p id="lastupdate">
+              Last updated: <time datetime="{{ "now"|date(constant('\DateTime::ISO8601')) }}">{{ "now"|date(constant('\DateTime::RSS')) }}</time>
+          </p>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 col-lg-12">
+                <p>
+                  Adding the repository to <em>composer.json</em>:
+                </p>
+
+                <pre><code class="lang-json">
+{
+"repositories": [
+    {
+        "type": "composer",
+        "url": "https://packages.zendframework.com"
+    }
+]
+}
+                </code></pre>
+            </div>
+
+            <div class="col-sm-12 col-lg-12">
+              <p>Filter by package name:</p>
+
+              <input class="form-control" type="text" id="search" autocomplete="off" autofocus />
+            </div>
+        </div>
+    </div>
+
+    <div id="package-list" class="container">
+    {% for name, package in packages %}
+        <div class="row"><div class="col-sm-12 col-lg-12">
+            <div class="panel panel-default panel-component">
+                <div class="panel-heading">
+                    <h3 id="{{ package.highest.name }}">{{ package.highest.name }}<a href="#{{ package.highest.name }}"><small>¶</small></a></h3>
+                </div>
+              
+                <div class="panel-body">
+                {% if package.abandoned %}
+                    <p class="abandoned">
+                        Package {{ package.highest.name }} is abandoned, you should avoid using it.
+                        {% if package.replacement %}
+                            Use {{ package.replacement }} instead.
+                        {% else %}
+                            No replacement was suggested.
+                        {% endif %}
+                    </p>
+                {% endif %}
+                {% if package.highest.description %}
+                    <p>{{ package.highest.description }}</p>
+                {% endif %}
+                  
+                    <table class="table">
+                        {% if package.highest.homepage %}
+                            <tr>
+                                <th class="info"></th>Homepage</th>
+                                <td><a href="{{ package.highest.homepage }}">{{ package.highest.homepage }}</a></td>
+                            </tr>
+                        {% endif %}
+                        {% if package.highest.license %}
+                            <tr>
+                                <th class="info">License</th>
+                                <td>{{ package.highest.license|join(', ') }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if package.highest.authors %}
+                            <tr>
+                                <th class="info">Authors</th>
+                                <td>
+                                    {% for author in package.highest.authors %}
+                                        {%- if author.homepage -%}
+                                            <a href="{{ author.homepage }}">{{ author.name }}</a>
+                                        {%- else -%}
+                                            {{ author.name }}
+                                        {%- endif -%}
+                                        {%- if not loop.last -%}, {% endif -%}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if package.highest.support %}
+                        <tr>
+                            <th class="info">Support</th>
+                            <td>
+                                <ul>
+                                {% for support_type, support_url in package.highest.support %}
+                                    <li>{{ support_type|capitalize }}: <a href="{{ support_url }}">{{ support_url }}</a></li>
+                                {% endfor %}
+                                </ul>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <th class="info">Releases</th>
+                            <td>
+                                {% for version in package.versions %}
+                                    {%- if version.distType -%}
+                                        <a href="{{ version.distUrl }}" title="{{ version.distReference }}">{{ version.prettyVersion }}</a>
+                                    {%- else -%}
+                                        <a href="{{ version.sourceUrl }}" title="{{ version.sourceReference }}">{{ version.prettyVersion }}</a>
+                                    {%- endif -%}
+                                    {%- if not loop.last -%}, {% endif -%}
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="info">Required by</th>
+                            <td>
+                                {% set package_dependencies = attribute(dependencies, name) %}
+                                {% if package_dependencies|length %}
+                                    <ul>
+                                        {% for dependency in package_dependencies %}
+                                            <li><a href="#{{ dependency }}">{{ dependency }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div></div>
+    {% endfor %}
+    </div>
+
+    <div id="footerwrap">
+        <div class="container">
+            <div class="row site-map">
+                <div class="col-lg-3">
+                  <p>
+                    <strong>Zend Framework</strong><br />
+                    <a href="http://framework.zend.com">framework.zend.com</a><br />
+                    <a href="https://docs.zendframework.com">docs.zendframework.com</a><br />
+                    <a href="https://apigility.org">apigility.org</a><br />
+                  </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 centered">
+                    <a class="back-to-top"><i class="fa fa-chevron-circle-up fa-4" aria-hidden="true"></i></a>
+                </div>
+            </div>
+
+            <div class="spacing"></div>
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <h4>Copyright</h4>
+                    <div class="hline-w"></div>
+
+                    <p>&copy; 2006-{{ "now"|date("Y") }} by <a href="http://www.zend.com">Zend</a>, a <a href="http://www.roguewave.com/">Rogue Wave Company</a>.</p>
+                </div>
+
+                <div class="col-lg-4">
+                    <h4>Contacts</h4>
+                    <div class="hline-w"></div>
+                    <p>
+                        <a href="irc://irc.freenode.net/zftalk" class="btn-social btn-outline" alt="IRC" title="IRC"><i class="fa fa-comment"></i></a>
+                        <a href="https://github.com/zendframework" class="btn-social btn-outline" alt="Github" title="Github"><i class="fa fa-github"></i></a>
+                        <a href="https://twitter.com/zfdevteam" class="btn-social btn-outline" alt="Twitter" title="Twitter"><i class="fa fa-twitter"></i></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/moment.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/prism.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+    $(function(){
+        var packages = $('h3');
+        var timer;
+        $('input#search').keyup(function(){
+            clearTimeout(timer);
+            var ms = 350; // milliseconds
+            var needle = $(this).val().toLowerCase(), show;
+            timer = setTimeout(function() {
+                $('#package-list').hide();
+                packages.each(function(){
+                    show = $(this).text().toLowerCase().indexOf(needle) != -1;
+                    $(this).parent().toggle(show);
+                });
+                $('#package-list').show();
+            }, ms);
+        }).focus();
+        $('input#search').change(function(){
+            window.location.hash = "!/" + $(this).val().toLowerCase();
+        });
+        $(window).on("hashchange", function() {
+            var $input = $('input#search');
+            if (window.location.hash.indexOf("#!/") == 0) {
+                $input.val(window.location.hash.replace(/#!\//,"").toLowerCase());
+                $input.trigger("keyup");
+            } else {
+                var $anchor = $("h3[id='"+window.location.hash.replace(/^#/,"")+"']");
+                if ($anchor.length != $anchor.filter(":visible").length) {
+                    $input.val("").trigger("keyup");
+                    $anchor.get(0).scrollIntoView();
+                }
+            }
+        });
+        $(window).trigger("hashchange");
+        var $lastUpdate = $('#lastupdate time');
+        function updateDate() {
+            $lastUpdate.text(moment('{{ "now"|date(constant('\DateTime::ISO8601')) }}').fromNow());
+        }
+        setInterval(updateDate, 5000);
+        updateDate();
+    });
+    </script>
+</body>
+</html>

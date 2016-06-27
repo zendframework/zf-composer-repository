@@ -1,6 +1,7 @@
 {
   "name": "Zend Framework Repository",
   "homepage": "https://packages.zendframework.com",
+  "twig-template": "views/custom.html.twig",
   "repositories": [
     {"type": "vcs", "url": "/mnt/efs/packages.zendframework.com/repos/zendframework/zend-authentication/.git"},
     {"type": "vcs", "url": "/mnt/efs/packages.zendframework.com/repos/zendframework/zend-barcode/.git"},
