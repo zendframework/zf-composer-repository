@@ -1,6 +1,10 @@
 Satis - Package Repository Generator
 ====================================
 
+> ## Repository abandoned 2019-12-05
+>
+> This repository is no longer maintained.
+
 Simple static Composer repository generator.
 
 It uses any composer.json file as input and dumps all the required (according
